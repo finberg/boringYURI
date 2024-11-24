@@ -1,3 +1,7 @@
+## Boring YURI 2.1.0 (2024-11-25)
+* Support Kotlin `2.0.21` and KSP `2.0.21-1.0.25`
+* Upgrade dependencies and build tools
+
 ## Boring YURI 2.0.1 (2023-10-04)
 * Fix generating imports for types in `TypeAdapterFactory` with KSP.
 * Fix signing maven artifacts ([Bug #40](https://github.com/anton-novikau/boringYURI/issues/40)).
