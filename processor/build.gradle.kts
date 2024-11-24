@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinJvm
 import org.gradle.jvm.tasks.Jar
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm")
-    kotlin("kapt")
-    id("org.jetbrains.dokka")
-    id("com.vanniktech.maven.publish")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.dokka)
+    alias(libs.plugins.maven.publish)
 }
 
 val fatJarMembers: Set<String> = setOf(
@@ -36,8 +39,6 @@ fatJarMembers.forEach {
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
     implementation(project(":api"))
     fatJarMembers.forEach { projectName ->
         compileOnly(project(":$projectName"))
@@ -69,7 +70,7 @@ tasks.jar.configure {
 }
 
 tasks.withType(Jar::class).configureEach {
-    if (name == "javaSourcesJar") {
+    if (name == "sourcesJar") {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
         fatJarMembers.forEach {
@@ -95,7 +96,16 @@ tasks.withType<DokkaTask>().configureEach {
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString() // in order to compile Kotlin to java 11 bytecode
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11) // in order to compile Kotlin to java 11 bytecode
     }
+}
+
+mavenPublishing {
+    configure(
+        KotlinJvm(
+            javadocJar = JavadocJar.Dokka("dokkaHtml"),
+            sourcesJar = true,
+        )
+    )
 }

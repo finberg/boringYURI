@@ -15,14 +15,15 @@
  */
 @file:Suppress("UnstableApiUsage")
 
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.Locale
 
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.ksp)
 }
 
 val useKsp: Boolean = hasProperty("boringyuri.useKsp")
@@ -30,7 +31,6 @@ val useKsp: Boolean = hasProperty("boringyuri.useKsp")
 android {
     namespace = "boringyuri.sample"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
-    buildToolsVersion = libs.versions.buildTools.get()
 
     defaultConfig {
         applicationId = "boringyuri.sample"
@@ -94,8 +94,6 @@ android {
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
     implementation(libs.androidx.lifecycle.viewModel)
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.constraintLayout)
@@ -124,7 +122,7 @@ if (useKsp) {
     kapt {
         useBuildCache = true
         javacOptions {
-            option("-Xmaxerrs", 1000) // max count of AP errors
+            option("-Xmaxerrs", 1000.toString()) // max count of AP errors
         }
         arguments {
             arg(
@@ -136,9 +134,9 @@ if (useKsp) {
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString() // in order to compile Kotlin to java 11 bytecode
-        freeCompilerArgs = listOf("-Xjvm-default=all")
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11) // in order to compile Kotlin to java 11 bytecode
+        freeCompilerArgs.add("-Xjvm-default=all")
     }
 }
 

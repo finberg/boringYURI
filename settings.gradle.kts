@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
 rootProject.name="boringYURI"
 include(":api")
 include(":processor")
