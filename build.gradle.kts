@@ -19,21 +19,17 @@ buildscript {
         google()
         mavenCentral()
     }
-
-    dependencies {
-        classpath(libs.gradlePlugin.android)
-        classpath(libs.gradlePlugin.kotlin)
-        classpath(libs.gradlePlugin.dokka)
-        classpath(libs.gradlePlugin.publish)
-        classpath(libs.gradlePlugin.ksp)
-        classpath(libs.google.ksp.api)
-    }
 }
 
-// https://youtrack.jetbrains.com/issue/KTIJ-19369
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.ksp) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.dokka) apply false
+    alias(libs.plugins.maven.publish) apply false
 }
 
 allprojects {
@@ -53,5 +49,5 @@ allprojects {
 }
 
 tasks.create<Delete>("clean") {
-    delete(rootProject.buildDir)
+    delete(rootProject.layout.buildDirectory)
 }

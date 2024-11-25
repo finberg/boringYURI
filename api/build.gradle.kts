@@ -1,3 +1,6 @@
+import com.vanniktech.maven.publish.JavaLibrary
+import com.vanniktech.maven.publish.JavadocJar
+
 /*
  * Copyright 2020 Anton Novikau
  *
@@ -16,16 +19,23 @@
 
 plugins {
     id("java-library")
-    id("com.vanniktech.maven.publish")
+    alias(libs.plugins.maven.publish)
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
     api(libs.androidx.annotation)
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
+}
+
+mavenPublishing {
+    configure(
+        JavaLibrary(
+            javadocJar =  JavadocJar.Javadoc(),
+            sourcesJar = true,
+        )
+    )
 }

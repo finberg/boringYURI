@@ -1,27 +1,32 @@
 [versions]
 # android versions
-buildTools = "34.0.0"
-android-compileSdk = "34"
-android-targetSdk = "34"
+android-compileSdk = "35"
+android-targetSdk = "35"
 android-minSdk = "21"
 
 # dependencies' versions
-kotlin = "1.9.10"
-ksp = "1.9.10-1.0.13"
-dagger = "2.48"
+agp = "8.7.2"
+annotations = "1.9.1"
+appcompat = "1.7.0"
+auto-service = "1.1.1"
+consntraintLayout = "2.2.0"
+commons-text = "1.12.0"
+dagger = "2.52"
+dokka = "1.9.20"
+javapoet = "1.13.0"
+junit = "4.13.2"
+kotlin = "2.0.21"
+ksp = "2.0.21-1.0.25"
+mavenPublish = "0.30.0"
+room = "2.6.1"
+viewmodel = "2.8.7"
 
 [libraries]
-androidx-annotation = { module = "androidx.annotation:annotation", version = "1.7.0" }
-androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version = "2.1.4" }
-androidx-appCompat = { module = "androidx.appcompat:appcompat", version = "1.6.1" }
-androidx-lifecycle-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version = "2.6.2" }
-androidx-room-xprocessing = { module = "androidx.room:room-compiler-processing", version = "2.5.2" }
-
-gradlePlugin-android = { module = "com.android.tools.build:gradle", version = "8.1.1" }
-gradlePlugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-gradlePlugin-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version = "1.9.0" }
-gradlePlugin-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version = "0.25.3" }
-gradlePlugin-ksp = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotations" }
+androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "consntraintLayout" }
+androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-lifecycle-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "viewmodel" }
+androidx-room-xprocessing = { module = "androidx.room:room-compiler-processing", version.ref = "room" }
 
 dagger-core = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-android = { module = "com.google.dagger:dagger-android", version.ref = "dagger" }
@@ -29,15 +34,14 @@ dagger-support = { module = "com.google.dagger:dagger-android-support", version.
 dagger-compiler-common = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 dagger-compiler-android = { module = "com.google.dagger:dagger-android-processor", version.ref = "dagger" }
 
-commons-text = { module = "org.apache.commons:commons-text", version = "1.10.0" }
+commons-text = { module = "org.apache.commons:commons-text", version.ref = "commons-text" }
 
-google-auto-common = { module = "com.google.auto:auto-common", version = "1.2.2" }
-google-auto-service = { module = "com.google.auto.service:auto-service", version = "1.1.1" }
+google-auto-service = { module = "com.google.auto.service:auto-service", version.ref = "auto-service" }
 google-ksp-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
 
-square-javaPoet = { module = "com.squareup:javapoet", version = "1.13.0" }
+square-javaPoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
 
-junit = { module = "junit:junit", version = "4.13.2" }
+junit = { module = "junit:junit", version.ref = "junit" }
 
 [bundles]
 dagger = [
@@ -51,4 +55,11 @@ dagger-compiler = [
 ]
 
 [plugins]
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin"}
+kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }

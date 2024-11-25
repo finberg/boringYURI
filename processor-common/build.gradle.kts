@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm")
+    alias(libs.plugins.kotlin.jvm)
 }
 
 java {
@@ -33,8 +34,8 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString() // in order to compile Kotlin to java 11 bytecode
-        freeCompilerArgs = listOf("-Xjvm-default=all")
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11) // in order to compile Kotlin to java 11 bytecode
+        freeCompilerArgs.add("-Xjvm-default=all")
     }
 }
